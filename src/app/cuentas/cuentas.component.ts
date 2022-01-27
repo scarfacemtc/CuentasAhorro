@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CuentaInterface } from '../models/cuenta.model';
 import { AuthService } from '../services/auth.service';
 import { CuentaService } from '../services/cuenta.service';
@@ -14,7 +13,8 @@ export class CuentasComponent implements OnInit {
 
   cuentasAhorro: CuentaInterface[];
   cuentaForm: FormGroup;
-  filtroIdCliente:number;
+  filtroIDCliente:number;
+  filtroNoCuenta:string;
 
   constructor(
     private cuentaService: CuentaService, 
@@ -82,24 +82,7 @@ export class CuentasComponent implements OnInit {
   sortCuentas(){
     this.cuentasAhorro.sort((a,b) => {
       return Date.parse(b.fechaUltimaAct) - Date.parse(a.fechaUltimaAct);
-    })
-  }
-
-  getCuentasDeCliente(){
-    if(this.filtroIdCliente == null){
-      this.getCuentas();
-      return;
-    }
-    var cuentas_filtradas = [];
-    this.cuentasAhorro.forEach( 
-      c => {        
-        if (c.idCliente == this.filtroIdCliente) {
-          cuentas_filtradas.push(c);
-        }
-      }
-    );
-    
-    this.cuentasAhorro = cuentas_filtradas;
+    });
   }
 
 }

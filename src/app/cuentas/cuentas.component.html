@@ -30,13 +30,19 @@
         </div>
         <!-- Tabla de todas las cuentas de ahorro -->
         <div class="col-12 mt-4 mt-lg-0 col-lg-8 table-responsive">
+            <p class="text-muted">* Seleccionar una cuenta para ver las transacciones.</p>
             <div class="row justify-content-end">
-                <div class="col-4">
-                    <label for="filtroIdCliente" class="form-label">Filtrar por ID de Cliente:</label>
-                    <input (change)="getCuentasDeCliente()" class="form-control" type="number" [(ngModel)]="filtroIdCliente">
+                <!-- Contenedor para filtrar -->
+                <div class="col-12 col-sm-6 col-md-2 text-end">
+                    <label for="" class="form-label">Filtrar por:</label>
+                </div>
+                <div class="col-3">
+                    <input class="form-control" type="number" placeholder="ID Cliente" [(ngModel)]="filtroIDCliente">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" type="number" placeholder="No. de cuenta" [(ngModel)]="filtroNoCuenta">
                 </div>
             </div>
-            <p class="text-muted">* Seleccionar una cuenta para ver las transacciones.</p>
             <table class="table table-hover table-bordered border-light">
                 <thead>
                     <tr>
@@ -44,14 +50,16 @@
                         <th scope="col">No. Cuenta</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Saldo</th>
+                        <th scope="col">Fecha últ. act.</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let c of cuentasAhorro" routerLink="/transacciones/{{c.numeroCuenta}}">
+                    <tr *ngFor="let c of cuentasAhorro | filtroCliente:filtroIDCliente | filtroCuenta:filtroNoCuenta;" routerLink="/transacciones/{{c.numeroCuenta}}">
                         <th scope="row">{{c.estado}}</th>
                         <td>{{c.numeroCuenta}}</td>
                         <td>{{c.idCliente}}</td>
                         <td>{{c.saldo | currency: 'MXN'}}</td>
+                        <td>{{c.fechaUltimaAct | date: 'shortDate'}}</td>
                     </tr>
                 </tbody>
             </table>

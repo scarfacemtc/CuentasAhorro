@@ -19,6 +19,8 @@ import { TransaccionesCuentaComponent } from './transacciones-cuenta/transaccion
 //Locales
 import { registerLocaleData } from '@angular/common';
 import localeES from "@angular/common/locales/es-MX";
+import { FiltroClientePipe } from './pipes/filtro-cliente.pipe';
+import { FiltroCuentaPipe } from './pipes/filtro-cuenta.pipe';
 registerLocaleData(localeES, 'es-MX');
 
 @NgModule({
@@ -30,6 +32,8 @@ registerLocaleData(localeES, 'es-MX');
     CuentasComponent,
     TransaccionesComponent,
     TransaccionesCuentaComponent,
+    FiltroClientePipe,
+    FiltroCuentaPipe,
   ],
   imports: [
     BrowserModule,
