@@ -1,0 +1,92 @@
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h1>Información de cuenta</h1>
+        </div>
+    </div>
+    <!-- Contenedor de info cuenta -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 py-2 pt-md-0">
+            <div class="card text-center">
+                <div class="card-header">
+                    <p>ID Cliente: {{cuentaActual.idCliente}}</p>
+                </div>
+                <div class="card-body">
+                    <h1>{{ cuentaActual.saldo | currency: 'MXN' }}</h1>
+                    <p>
+                        <span class="dot" [ngClass]="{ 'bg-success' : cuentaActual.estado == 'Activa',
+                            'bg-danger' : cuentaActual.estado != 'Activa' }">
+                        </span>
+                        {{cuentaActual.estado}}
+                    </p>
+                    <p class="text-muted mb-0">No. cuenta: {{cuentaActual.numeroCuenta}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contenedor p/realizar transacción -->
+    <div class="row justify-content-center mb-2">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="row justify-content-center">
+                <p class="text-muted">Realizar algún:</p>
+                <div class="col-11 col-md-5 d-grid gap-2">
+                    <button (click)="transaccion.tipo = 'Deposito'" class="btn btn-success btn-block"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">Depósito</button>
+                </div>
+                <div class="col-11 col-md-1 text-muted text-center">O</div>
+                <div class="col-11 col-md-5 d-grid gap-2">
+                    <button (click)="transaccion.tipo = 'Retiro'" class="btn btn-dark btn-block" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Retiro</button>
+                </div>
+                <!-- Modal de formulario -->
+                <div class="col-11 modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-0 pb-2">
+                                <h5 class="modal-title" id="staticBackdropLabel">Monto de la transacción:</h5>
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                            </div>
+                            <div class="modal-body py-2">
+                                <input class="form-control" min="1" type="number" [(ngModel)]="transaccion.monto" name="monto" id="inputMonto">
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button #closeModal (click)="initTransaccion()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button (click)="createTransaccion()" *ngIf="transaccion.tipo == 'Deposito'" type="button" class="btn btn-primary">Depositar</button>
+                                <button (click)="createTransaccion()" *ngIf="transaccion.tipo == 'Retiro'" type="button" class="btn btn-dark">Retirar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contenedor de transacciones de cuenta -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h4>Transacciones</h4>
+            <!-- Mensaje en caso que no existan transacciones -->
+            <div *ngIf="showMsg" class="alert alert-secondary" role="alert">
+                Aún no se ha realizado ningún depósito o retiro.
+            </div>
+            <!-- Lista de transacciones -->
+            <ul class="list-group list-group-flush border-top">
+                <li *ngFor="let t of transacciones" class="list-group-item">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <p>
+                                {{t.tipo}} desde {{t.terminal}} <br>
+                                <span class="text-muted">Realizado por {{t.usuario}}</span><br>
+                                <span class="text-muted">{{t.fechaUltimaAct | date:'dd MMM yyyy hh:mm a'}}</span>
+                            </p>
+                        </div>
+                        <div class="col text-end fw-bold" [ngClass]="{ 'text-success' : t.tipo == 'Deposito' }">
+                            <span *ngIf="t.tipo == 'Retiro'">&minus;</span>
+                            {{t.monto | currency: 'MXN'}}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

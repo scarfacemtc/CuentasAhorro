@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "CuentasAhorro"
+    }
+  },
+  "defaultProject": "CuentasAhorro",
+  "cli": {
+    "analytics": "7a285b49-05b8-4815-a556-61e0a16dfa1e"
+  }
 }

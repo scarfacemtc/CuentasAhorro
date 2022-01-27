@@ -1,0 +1,61 @@
+<div class="container my-4">
+    <div class="row">
+        <h2>Cuentas de Ahorro</h2>
+    </div>
+    <div class="row">
+        <!-- Contenedor de form para alta de cuenta -->
+        <div class="col-12 col-md-7 col-lg-4 my-md-2">
+            <div class="card">
+                <div class="card-header">
+                    Nueva cuenta
+                </div>
+                <form class="card-body" (submit)="createCuenta()" [formGroup]="cuentaForm">
+                    <div class="mb-3">
+                        <label for="formCliente" class="form-label">ID Cliente</label>
+                        <input type="number" min="0" class="form-control" id="formCliente" formControlName="idCliente">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formNumCuenta" class="form-label">No. cuenta</label>
+                        <input type="text" class="form-control" id="formNumCuenta" formControlName="numeroCuenta">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formSaldo" class="form-label">Saldo</label>
+                        <input type="number" min="0" class="form-control" id="formSaldo" formControlName="saldo">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Tabla de todas las cuentas de ahorro -->
+        <div class="col-12 mt-4 mt-lg-0 col-lg-8 table-responsive">
+            <div class="row justify-content-end">
+                <div class="col-4">
+                    <label for="filtroIdCliente" class="form-label">Filtrar por ID de Cliente:</label>
+                    <input (change)="getCuentasDeCliente()" class="form-control" type="number" [(ngModel)]="filtroIdCliente">
+                </div>
+            </div>
+            <p class="text-muted">* Seleccionar una cuenta para ver las transacciones.</p>
+            <table class="table table-hover table-bordered border-light">
+                <thead>
+                    <tr>
+                        <th scope="col">Estado</th>
+                        <th scope="col">No. Cuenta</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of cuentasAhorro" routerLink="/transacciones/{{c.numeroCuenta}}">
+                        <th scope="row">{{c.estado}}</th>
+                        <td>{{c.numeroCuenta}}</td>
+                        <td>{{c.idCliente}}</td>
+                        <td>{{c.saldo | currency: 'MXN'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
