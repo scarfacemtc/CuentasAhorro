@@ -71,8 +71,7 @@ export class TransaccionesCuentaComponent implements OnInit {
         this.transacciones = transacciones;
         this.sortTransacciones();
         console.log(this.transacciones);
-        if (this.transacciones.length == 0) //Bandera para mostrar msj
-          this.showMsg = true;
+        this.transacciones.length == 0? this.showMsg = true:this.showMsg = false; //Bandera para mostrar msj
       },
       err => {
         if (err.status == 401) { //Si no está autorizado
@@ -101,6 +100,7 @@ export class TransaccionesCuentaComponent implements OnInit {
         this.transacciones.push(this.transaccion);
         this.sortTransacciones();
         this.closeModal.nativeElement.click(); //Cierra modal de transaccion y se inicializa objeto transaccion
+        if (this.showMsg) this.showMsg = false;
       }
     );
   }
