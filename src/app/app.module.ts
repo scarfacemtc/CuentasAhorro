@@ -13,7 +13,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterClientComponent } from './register-client/register-client.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CuentasComponent } from './cuentas/cuentas.component';
-import { TransaccionesComponent } from './transacciones/transacciones.component';
 import { TransaccionesCuentaComponent } from './transacciones-cuenta/transacciones-cuenta.component';
 
 //Locales
@@ -30,7 +29,6 @@ registerLocaleData(localeES, 'es-MX');
     RegisterClientComponent,
     NavbarComponent,
     CuentasComponent,
-    TransaccionesComponent,
     TransaccionesCuentaComponent,
     FiltroClientePipe,
     FiltroCuentaPipe,

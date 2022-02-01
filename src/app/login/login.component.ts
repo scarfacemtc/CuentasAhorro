@@ -15,8 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
 
   constructor(
-    private authService:AuthService, 
-    private formBuilder:FormBuilder,
+    private authService:AuthService,
     private router:Router
   )
   {
@@ -40,6 +39,12 @@ export class LoginComponent implements OnInit {
         console.log('res login:',res);
         this.authService.handleUser(res);
         this.router.navigate(['/cuentas']);
+      },
+      err => {
+        if (err) {
+          console.log(err.error.error.message);
+          alert(err.error.error.message);
+        }
       }
     );
   }
